@@ -15,18 +15,18 @@ class KNN:
         self.X_train = X
         self.y_train = y
 
-    def predict(self, X):
+    def predict(self, X, k):
+        self.k = k
         predictions = [self._predict(x) for x in X]
         return predictions
 
     def _predict(self, x):
-        # compute the distances between all the data points and
+        # compute the distances between all the data points
         distances = [euclideanDistance(x, x_train) for x_train in self.X_train]
 
         # get the closest k
         k_indices = np.argsort(distances)[:self.k]
         k_nearest_labels = [self.y_train[i] for i in k_indices]
-        print(k_nearest_labels)
 
         # majority vote
         most_common = Counter(k_nearest_labels).most_common()
